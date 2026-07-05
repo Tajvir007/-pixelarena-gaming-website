@@ -1,5 +1,5 @@
 const request = require('supertest');
-const app = require('../server');
+const app = require('./server');
 
 describe('PixelArena Gaming Website API', () => {
   test('GET /api/health should return status ok', async () => {
