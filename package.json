@@ -1,0 +1,20 @@
+{
+  "name": "pixelarena-gaming-website",
+  "version": "1.0.0",
+  "description": "A simple gaming website used for practicing Jenkins CI/CD pipelines",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "test": "jest --ci --verbose"
+  },
+  "dependencies": {
+    "express": "^4.19.2"
+  },
+  "devDependencies": {
+    "jest": "^29.7.0",
+    "supertest": "^7.0.0"
+  },
+  "engines": {
+    "node": ">=18"
+  }
+}
