@@ -1,4 +1,4 @@
-# PixelArena GitHub Actions CI/CD
+# PixelArena CI + Docker Hub
 
 
 # ============================================================
@@ -6,7 +6,7 @@
 # ============================================================
 
 # Workflow name
-name: PixelArena CI/CD
+name: PixelArena CI + Docker
 
 
 # ============================================================
