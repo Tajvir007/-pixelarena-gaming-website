@@ -11,7 +11,7 @@
     "express": "^4.19.2"
   },
   "devDependencies": {
-    "jest": "^29.7.0",
+    "jest": "^30.5.2",
     "supertest": "^7.0.0"
   },
   "engines": {
