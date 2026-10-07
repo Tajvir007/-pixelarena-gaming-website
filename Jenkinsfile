@@ -44,11 +44,11 @@ pipeline {
 
         stage('Deploy') {
             steps {
-                echo 'Deploying container locally on port 3000...'
+                echo 'Deploying container locally on port 3001...'
                 sh """
                     docker stop ${IMAGE_NAME} || true
                     docker rm ${IMAGE_NAME} || true
-                    docker run -d --name ${IMAGE_NAME} -p 3000:3000 ${IMAGE_NAME}:${IMAGE_TAG}
+                    docker run -d --name ${IMAGE_NAME} -p 3001:3001 ${IMAGE_NAME}:${IMAGE_TAG}
                 """
             }
         }
@@ -56,7 +56,7 @@ pipeline {
 
     post {
         success {
-            echo 'Pipeline finished successfully! App is running on http://localhost:3000'
+            echo 'Pipeline finished successfully! App is running on http://localhost:3001'
         }
         failure {
             echo 'Pipeline failed. Check the console output above for errors.'

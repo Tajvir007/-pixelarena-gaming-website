@@ -3,31 +3,316 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <meta
+    name="description"
+    content="PixelArena - A futuristic browser gaming hub."
+  />
+
   <title>PixelArena | Gaming Hub</title>
+
   <link rel="stylesheet" href="/css/style.css" />
 </head>
+
 <body>
+
+  <!-- ================================
+       NAVBAR
+  ================================= -->
+
   <header class="navbar">
-    <div class="logo">🎮 PixelArena</div>
-    <nav>
-      <a href="/index.html">Home</a>
-      <a href="/game.html">Play Tic-Tac-Toe</a>
+
+    <a href="/index.html" class="logo">
+      <span class="logo-icon">◈</span>
+      Pixel<span>Arena</span>
+    </a>
+
+    <nav class="nav-links">
+
+      <a href="/index.html" class="active">
+        Home
+      </a>
+
+      <a href="/games.html">
+        Games
+      </a>
+
+      <a href="/game.html">
+        Tic-Tac-Toe
+      </a>
+
     </nav>
+
+    <a href="/games.html" class="nav-button">
+      Play Now
+    </a>
+
   </header>
 
-  <section class="hero">
-    <h1>Welcome to PixelArena</h1>
-    <p>Your one-stop hub for quick browser games.</p>
-  </section>
 
-  <section class="games-grid" id="games-grid">
-    <!-- Game cards injected by script.js -->
-  </section>
+  <!-- ================================
+       HERO SECTION
+  ================================= -->
+
+  <main>
+
+    <section class="hero">
+
+      <div class="hero-background"></div>
+
+      <div class="hero-content">
+
+        <div class="status-badge">
+          <span></span>
+          PIXELARENA ONLINE
+        </div>
+
+        <h1>
+          ENTER THE
+          <span>ARENA.</span>
+        </h1>
+
+        <p>
+          Quick games. Endless fun.
+          Challenge yourself and climb the leaderboard.
+        </p>
+
+        <div class="hero-buttons">
+
+          <a href="/games.html" class="primary-button">
+            Explore Games
+            <span>→</span>
+          </a>
+
+          <a href="#featured" class="secondary-button">
+            Discover More
+          </a>
+
+        </div>
+
+      </div>
+
+
+      <!-- Decorative gaming card -->
+
+      <div class="hero-card">
+
+        <div class="hero-card-top">
+          <span>FEATURED GAME</span>
+          <span class="online">● LIVE</span>
+        </div>
+
+        <div class="game-preview">
+          <div class="grid-pattern"></div>
+
+          <div class="game-symbol symbol-x">×</div>
+          <div class="game-symbol symbol-o">○</div>
+          <div class="game-symbol symbol-x second">×</div>
+
+        </div>
+
+        <div class="hero-card-bottom">
+
+          <div>
+            <small>NOW PLAYING</small>
+            <h3>Tic-Tac-Toe</h3>
+          </div>
+
+          <a href="/game.html">PLAY →</a>
+
+        </div>
+
+      </div>
+
+    </section>
+
+
+    <!-- ================================
+         STATS
+    ================================= -->
+
+    <section class="stats">
+
+      <div class="stat">
+        <strong>03+</strong>
+        <span>Games</span>
+      </div>
+
+      <div class="stat">
+        <strong>1K+</strong>
+        <span>Players</span>
+      </div>
+
+      <div class="stat">
+        <strong>24/7</strong>
+        <span>Available</span>
+      </div>
+
+      <div class="stat">
+        <strong>∞</strong>
+        <span>Fun</span>
+      </div>
+
+    </section>
+
+
+    <!-- ================================
+         FEATURED GAMES
+    ================================= -->
+
+    <section class="featured" id="featured">
+
+      <div class="section-heading">
+
+        <div>
+          <span class="section-label">DISCOVER</span>
+
+          <h2>
+            Featured <span>Games</span>
+          </h2>
+        </div>
+
+        <a href="/games.html">
+          View All →
+        </a>
+
+      </div>
+
+
+      <div class="games-grid">
+
+        <!-- Game 1 -->
+
+        <article class="game-card">
+
+          <div class="game-card-image tic-tac">
+
+            <span class="game-number">01</span>
+
+            <div class="big-symbol">×</div>
+            <div class="big-symbol">○</div>
+            <div class="big-symbol">×</div>
+
+          </div>
+
+          <div class="game-card-content">
+
+            <span class="game-category">
+              STRATEGY
+            </span>
+
+            <h3>Tic-Tac-Toe</h3>
+
+            <p>
+              Classic strategy. Quick matches.
+              Can you get three in a row?
+            </p>
+
+            <a href="/game.html" class="play-link">
+              Play Game →
+            </a>
+
+          </div>
+
+        </article>
+
+
+        <!-- Game 2 -->
+
+        <article class="game-card">
+
+          <div class="game-card-image memory">
+
+            <span class="game-number">02</span>
+
+            <div class="memory-symbol">?</div>
+
+          </div>
+
+          <div class="game-card-content">
+
+            <span class="game-category">
+              PUZZLE
+            </span>
+
+            <h3>Memory Rush</h3>
+
+            <p>
+              Test your memory and match
+              the hidden patterns.
+            </p>
+
+            <a href="/games.html" class="play-link">
+              Coming Soon →
+            </a>
+
+          </div>
+
+        </article>
+
+
+        <!-- Game 3 -->
+
+        <article class="game-card">
+
+          <div class="game-card-image reaction">
+
+            <span class="game-number">03</span>
+
+            <div class="reaction-symbol">⚡</div>
+
+          </div>
+
+          <div class="game-card-content">
+
+            <span class="game-category">
+              ARCADE
+            </span>
+
+            <h3>Reaction Rush</h3>
+
+            <p>
+              How fast are your reflexes?
+              Find out now.
+            </p>
+
+            <a href="/games.html" class="play-link">
+              Coming Soon →
+            </a>
+
+          </div>
+
+        </article>
+
+      </div>
+
+    </section>
+
+  </main>
+
+
+  <!-- ================================
+       FOOTER
+  ================================= -->
 
   <footer>
-    <p>&copy; 2026 PixelArena. Built for Jenkins CI/CD practice.</p>
+
+    <div class="footer-logo">
+      ◈ PixelArena
+    </div>
+
+    <p>
+      Built with passion & code.
+    </p>
+
+    <span>
+      © 2026 PixelArena
+    </span>
+
   </footer>
 
+
   <script src="/js/script.js"></script>
+
 </body>
 </html>

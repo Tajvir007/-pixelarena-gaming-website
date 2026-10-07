@@ -1,27 +1,179 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
+
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Tic-Tac-Toe | PixelArena</title>
-  <link rel="stylesheet" href="/css/style.css" />
+
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0"
+  />
+
+  <title>PixelArena | Tic-Tac-Toe</title>
+
+  <link
+    rel="stylesheet"
+    href="/css/style.css"
+  />
+
 </head>
+
 <body>
+
+  <!-- NAVBAR -->
+
   <header class="navbar">
-    <div class="logo">🎮 PixelArena</div>
-    <nav>
-      <a href="/index.html">Home</a>
-      <a href="/game.html">Play Tic-Tac-Toe</a>
+
+    <a href="/index.html" class="logo">
+
+      <span class="logo-icon">
+        ◈
+      </span>
+
+      Pixel<span>Arena</span>
+
+    </a>
+
+    <nav class="nav-links">
+
+      <a href="/index.html">
+        Home
+      </a>
+
+      <a href="/games.html">
+        Games
+      </a>
+
+      <a href="/game.html" class="active">
+        Tic-Tac-Toe
+      </a>
+
     </nav>
+
   </header>
 
-  <section class="game-section">
-    <h1>Tic-Tac-Toe</h1>
-    <p id="status">Player X's turn</p>
-    <div class="board" id="board"></div>
-    <button id="reset-btn">Reset Game</button>
-  </section>
 
-  <script src="/js/tictactoe.js"></script>
+  <!-- GAME PAGE -->
+
+  <main>
+
+    <section class="game-page">
+
+      <div class="game-intro">
+
+        <span class="section-label">
+          ARENA 01
+        </span>
+
+        <h1>
+          TIC-<span>TAC-TOE</span>
+        </h1>
+
+        <p>
+          Think ahead. Make your move.
+          Dominate the board.
+        </p>
+
+      </div>
+
+
+      <!-- GAME CONTAINER -->
+
+      <div class="game-container">
+
+        <div class="game-header">
+
+          <div>
+            <span>
+              PLAYER
+            </span>
+
+            <strong>
+              X
+            </strong>
+          </div>
+
+          <div class="vs">
+            VS
+          </div>
+
+          <div>
+            <span>
+              PLAYER
+            </span>
+
+            <strong>
+              O
+            </strong>
+          </div>
+
+        </div>
+
+
+        <!-- Your existing game -->
+
+        <div
+          id="game-board"
+          class="game-board"
+        >
+
+          <button class="cell"></button>
+          <button class="cell"></button>
+          <button class="cell"></button>
+
+          <button class="cell"></button>
+          <button class="cell"></button>
+          <button class="cell"></button>
+
+          <button class="cell"></button>
+          <button class="cell"></button>
+          <button class="cell"></button>
+
+        </div>
+
+
+        <div
+          id="game-status"
+          class="game-status"
+        >
+          PLAYER X'S TURN
+        </div>
+
+
+        <button
+          id="reset-game"
+          class="primary-button"
+        >
+          RESET GAME
+        </button>
+
+      </div>
+
+    </section>
+
+  </main>
+
+
+  <footer>
+
+    <div class="footer-logo">
+      ◈ PixelArena
+    </div>
+
+    <p>
+      May the best player win.
+    </p>
+
+    <span>
+      © 2026 PixelArena
+    </span>
+
+  </footer>
+
+
+  <script src="/js/game.js"></script>
+
 </body>
+
 </html>

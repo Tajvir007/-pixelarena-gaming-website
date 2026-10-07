@@ -13,7 +13,7 @@ A minimal Node.js/Express gaming website with:
 npm install
 npm start
 ```
-Visit http://localhost:3000
+Visit http://localhost:3001
 
 ## Run tests
 ```bash
@@ -23,7 +23,7 @@ npm test
 ## Build & run with Docker
 ```bash
 docker build -t pixelarena-gaming-website .
-docker run -d -p 3000:3000 pixelarena-gaming-website
+docker run -d -p 3001:3001 pixelarena-gaming-website
 ```
 
 ## Jenkins
