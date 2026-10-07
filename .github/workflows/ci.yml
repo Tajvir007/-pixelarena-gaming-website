@@ -1,0 +1,44 @@
+```yaml
+# Workflow name
+name: PixelArena CI
+
+# Workflow will run when
+on:
+
+  # Code is pushed to the main branch
+  push:
+    branches:
+      - main
+
+  # Pull request is created for the main branch
+  pull_request:
+    branches:
+      - main
+
+# Jobs section
+jobs:
+
+  # Test job
+  application-test:
+
+    # Use GitHub-hosted Ubuntu runner
+    runs-on: ubuntu-latest
+
+    # Steps of the job
+    steps:
+
+      # Checkout repository code
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      # Setup Node.js
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 18
+          cache: npm
+
+      # Install dependencies
+      - name: Install dependencies
+        run: npm ci
+```
