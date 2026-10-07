@@ -1,42 +1,169 @@
-# Workflow name
-name: PixelArena CI
+# PixelArena GitHub Actions CI/CD
 
-# Workflow will run when
+
+# ============================================================
+# Workflow Configuration
+# ============================================================
+
+# Workflow name
+name: PixelArena CI/CD
+
+
+# ============================================================
+# Workflow Triggers
+# ============================================================
+
+# Workflow কখন run করবে
 on:
 
-  # Code is pushed to the main branch
+  # main branch-এ code push হলে
   push:
     branches:
       - main
 
-  # Pull request is created for the main branch
+  # main branch-এর জন্য Pull Request তৈরি হলে
   pull_request:
     branches:
       - main
 
-# Jobs section
+
+# ============================================================
+# Environment Variables
+# ============================================================
+
+env:
+
+  # Docker Hub repository name
+  IMAGE_NAME: ${{ secrets.DOCKERHUB_USERNAME }}/pixelarena-gaming-website
+
+
+# ============================================================
+# Jobs
+# ============================================================
+
 jobs:
 
-  # Test job
+  # ==========================================================
+  # Job 1 — Application Test
+  # ==========================================================
+
   application-test:
 
-    # Use GitHub-hosted Ubuntu runner
+    # GitHub-hosted Ubuntu runner ব্যবহার করবে
     runs-on: ubuntu-latest
 
-    # Steps of the job
     steps:
 
-      # Checkout repository code
+      # --------------------------------------------------------
+      # Step 1 — Checkout Repository
+      # --------------------------------------------------------
+
+      # GitHub repository-এর source code runner-এ নিয়ে আসবে
       - name: Checkout repository
         uses: actions/checkout@v4
 
-      # Setup Node.js
+
+      # --------------------------------------------------------
+      # Step 2 — Setup Node.js
+      # --------------------------------------------------------
+
+      # Node.js environment setup করবে
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
+
+          # Node.js version
           node-version: 18
+
+          # npm dependency caching enable করবে
           cache: npm
 
-      # Install dependencies
+
+      # --------------------------------------------------------
+      # Step 3 — Install Dependencies
+      # --------------------------------------------------------
+
+      # package-lock.json অনুযায়ী dependencies install করবে
       - name: Install dependencies
         run: npm ci
+
+
+      # --------------------------------------------------------
+      # Step 4 — Run Tests
+      # --------------------------------------------------------
+
+      # Application-এর automated tests run করবে
+      - name: Run tests
+        run: npm test
+
+
+  # ==========================================================
+  # Job 2 — Docker Build & Push
+  # ==========================================================
+
+  docker:
+
+    # Application test সফল হলে এই job run করবে
+    needs: application-test
+
+    # GitHub-hosted Ubuntu runner ব্যবহার করবে
+    runs-on: ubuntu-latest
+
+    steps:
+
+      # --------------------------------------------------------
+      # Step 1 — Checkout Repository
+      # --------------------------------------------------------
+
+      # GitHub repository-এর source code runner-এ নিয়ে আসবে
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+
+      # --------------------------------------------------------
+      # Step 2 — Login to Docker Hub
+      # --------------------------------------------------------
+
+      # Docker Hub-এ login করবে
+      - name: Login to Docker Hub
+        uses: docker/login-action@v4
+        with:
+
+          # Docker Hub username GitHub Secret থেকে নেবে
+          username: ${{ secrets.DOCKERHUB_USERNAME }}
+
+          # Docker Hub Access Token GitHub Secret থেকে নেবে
+          password: ${{ secrets.DOCKERHUB_TOKEN }}
+
+
+      # --------------------------------------------------------
+      # Step 3 — Setup Docker Buildx
+      # --------------------------------------------------------
+
+      # Docker Buildx setup করবে
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v4
+
+
+      # --------------------------------------------------------
+      # Step 4 — Build and Push Docker Image
+      # --------------------------------------------------------
+
+      # Docker image build করে Docker Hub-এ push করবে
+      - name: Build and push Docker image
+        uses: docker/build-push-action@v7
+        with:
+
+          # Current project directory-কে build context হিসেবে ব্যবহার করবে
+          context: .
+
+          # Dockerfile-এর location
+          file: ./Dockerfile
+
+          # Build শেষে Docker Hub-এ image push করবে
+          push: true
+
+          # Docker image tags
+          tags: |
+            ${{ env.IMAGE_NAME }}:latest
+            ${{ env.IMAGE_NAME }}:${{ github.sha }}
