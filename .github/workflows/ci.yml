@@ -26,6 +26,14 @@ on:
     branches:
       - main
 
+# Workflow-এর permission নির্ধারণ
+permissions:
+  # GitHub repository-এর code checkout করার অনুমতি
+  contents: read
+
+  # GitHub OIDC token request করার অনুমতি
+  id-token: write
+
 
 # ============================================================
 # Environment Variables
