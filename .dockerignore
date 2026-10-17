@@ -1,8 +1,20 @@
+# Dependencies are installed inside the image, never copied from your machine
 node_modules
-npm-debug.log
+
+# Secrets and local config must never go into an image
+.env
+.env.*
+
+# Git history and CI files are not needed at runtime
 .git
 .github
 .gitignore
-README.md
-docs
-Jenkinsfile
+
+# Logs and local clutter
+npm-debug.log*
+*.log
+.DS_Store
+
+# Docker files themselves
+Dockerfile
+.dockerignore

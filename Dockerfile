@@ -1,23 +1,30 @@
-# For loghtweight Node.js applications, we use the official Node.js Alpine image as the base image. This image is optimized for smaller size and faster performance.
+# Lightweight official Node.js image (Alpine = small size, fewer packages to attack)
 FROM node:22-alpine
 
-# Set the working directory inside the container to /app. This is where the application code will be copied and executed.
+# Run Node.js in production mode (faster, less debug output)
+ENV NODE_ENV=production
+
+# All application files live in /app
 WORKDIR /app
 
-# 1st copy dependency files to leverage Docker cache. This allows us to avoid re-installing dependencies if they haven't changed, which speeds up the build process.
+# Copy only dependency files first so Docker can cache the install step
 COPY package*.json ./
 
-# Install dependencies using npm ci, which is optimized for continuous integration environments. The --omit=dev flag ensures that only production dependencies are installed, reducing the final image size.
-RUN npm ci --omit=dev
+# Install production dependencies only, then remove the npm cache to keep the image small
+RUN npm ci --omit=dev && npm cache clean --force
 
-# Copying application source code
+# Copy the application source code, owned by the non-root "node" user
 COPY --chown=node:node . .
 
-# Application will listen port 3001, so we expose this port to allow communication with the container from the host machine or other containers.
+# Document the port the app listens on
 EXPOSE 3001
 
-# Run the application as a non-root user
+# Run everything below as a non-root user (fixes Trivy DS-0002)
 USER node
 
-# Application will start by running the server.js file using Node.js. The CMD instruction specifies the command to run when the container starts.
+# Docker marks the container "unhealthy" if the app stops responding
+HEALTHCHECK --interval=30s --timeout=5s --start-period=10s --retries=3 \
+  CMD wget -qO- http://localhost:3001/ || exit 1
+
+# Start the application
 CMD ["node", "server.js"]
