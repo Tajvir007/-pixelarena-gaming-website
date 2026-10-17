@@ -13,6 +13,12 @@ COPY package*.json ./
 # Install production dependencies only, then remove the npm cache to keep the image small
 RUN npm ci --omit=dev && npm cache clean --force
 
+# Upgrade Alpine packages to their latest patched versions
+RUN apk upgrade --no-cache
+
+# npm is only needed to install dependencies; remove it (and its bundled libraries) from the final image
+RUN rm -rf /usr/local/lib/node_modules/npm /usr/local/bin/npm /usr/local/bin/npx
+
 # Copy the application source code, owned by the non-root "node" user
 COPY --chown=node:node . .
 
