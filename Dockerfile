@@ -11,7 +11,7 @@ COPY package*.json ./
 RUN npm ci --omit=dev
 
 # Copying application source code
-COPY . .
+COPY --chown=node:node . .
 
 # Application will listen port 3001, so we expose this port to allow communication with the container from the host machine or other containers.
 EXPOSE 3001
