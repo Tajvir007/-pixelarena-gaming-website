@@ -16,5 +16,8 @@ COPY . .
 # Application will listen port 3001, so we expose this port to allow communication with the container from the host machine or other containers.
 EXPOSE 3001
 
+# Run the application as a non-root user
+USER node
+
 # Application will start by running the server.js file using Node.js. The CMD instruction specifies the command to run when the container starts.
 CMD ["node", "server.js"]
