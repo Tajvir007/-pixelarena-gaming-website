@@ -1,5 +1,5 @@
 # For loghtweight Node.js applications, we use the official Node.js Alpine image as the base image. This image is optimized for smaller size and faster performance.
-FROM node:18-alpine
+FROM node:22-alpine
 
 # Set the working directory inside the container to /app. This is where the application code will be copied and executed.
 WORKDIR /app
