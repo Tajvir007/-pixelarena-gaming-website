@@ -6,7 +6,7 @@
 # ============================================================
 
 # Workflow name
-name: PixelArena CI + Docker
+name: PixelArena CI + Docker + Trivy
 
 
 # ============================================================
@@ -104,15 +104,41 @@ jobs:
       - name: Run tests
         run: npm test
 
+  # ==========================================================
+  # Job 2: Trivy filesystem security scan
+  # ==========================================================
+  trivy-filesystem:
+    name: Trivy Filesystem Scan
+    needs: application-test
+    runs-on: ubuntu-latest
+
+    steps:
+      # Checkout the repository
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      # Scan dependencies, secrets and supported configurations
+      - name: Run Trivy filesystem scan
+        uses: aquasecurity/trivy-action@v0.36.0
+        with:
+          scan-type: fs
+          scan-ref: .
+          scanners: vuln,secret,misconfig
+          severity: HIGH,CRITICAL
+          ignore-unfixed: true
+          format: table
+          exit-code: '1'
+
 
   # ==========================================================
-  # Job 2 — Docker Build & Push
+  # Job 3 — Docker Build & Push
   # ==========================================================
 
   docker:
 
+    name: Docker Build, Scan and Push
     # Application test সফল হলে এই job run করবে
-    needs: application-test
+    needs: trivy-filesystem
 
     # GitHub-hosted Ubuntu runner ব্যবহার করবে
     runs-on: ubuntu-latest
@@ -123,14 +149,36 @@ jobs:
       # Step 1 — Checkout Repository
       # --------------------------------------------------------
 
-      # GitHub repository-এর source code runner-এ নিয়ে আসবে
+      # -----------------------------------------------------
+      # Step 2 — GitHub repository-এর source code runner-এ নিয়ে আসবে
+      # -----------------------------------------------------
       - name: Checkout repository
         uses: actions/checkout@v4
 
+      # Build image locally on the GitHub runner
+      - name: Build Docker image
+        run: |
+          docker build \
+            -t pixelarena-gaming-website:${{ github.sha }} \
+            .
+
 
       # -----------------------------------------------------
-      # Step 2 — Login to Docker Hub
+      # Step 3 — Login to Docker Hub
       # -----------------------------------------------------
+
+      # Scan the exact image built in the previous step
+      - name: Run Trivy image scan
+        uses: aquasecurity/trivy-action@v0.36.0
+        with:
+          scan-type: image
+          image-ref: pixelarena-gaming-website:${{ github.sha }}
+          scanners: vuln
+          vuln-type: os,library
+          severity: HIGH,CRITICAL
+          ignore-unfixed: true
+          format: table
+          exit-code: '1'
 
       # Docker Hub-এ login করবে
       - name: Login to Docker Hub
